@@ -39,7 +39,7 @@ namespace WareHouse.Product
         {
             // Arrange
             var product = SetupProduct();
-            _productRepositoryMock.Setup(r => r.GetProductById(product.Id)).ReturnsAsync(product);
+            _productRepositoryMock.Setup(r => r.GetProductByIdAsNoTracking(product.Id)).ReturnsAsync(product);
 
             // Act
             var result = await _productService.GetProduct(product.Id);
@@ -74,7 +74,7 @@ namespace WareHouse.Product
                 new Product { Id = Guid.NewGuid(), Code = "ABCDEFGH" },
                 new Product { Id = Guid.NewGuid(), Code = "HGFEDCBA" }
             };
-            _productRepositoryMock.Setup(r => r.GetProducts()).ReturnsAsync(products);
+            _productRepositoryMock.Setup(r => r.GetProductsAsNoTracking()).ReturnsAsync(products);
 
             // Act
             var result = await _productService.GetProducts();
@@ -90,7 +90,7 @@ namespace WareHouse.Product
         public async Task GetProducts_WhenNoProductsExist_ShouldReturnEmptyList()
         {
             // Arrange
-            _productRepositoryMock.Setup(r => r.GetProducts()).ReturnsAsync(new List<Product>());
+            _productRepositoryMock.Setup(r => r.GetProductsAsNoTracking()).ReturnsAsync(new List<Product>());
 
             // Act
             var result = await _productService.GetProducts();

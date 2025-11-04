@@ -81,10 +81,10 @@ namespace WareHouse.Product
         }
 
         /// <inheritdoc/>
-        public Task<Product?> GetProduct(Guid id) => _productRepository.GetProductById(id);
+        public Task<Product?> GetProduct(Guid id) => _productRepository.GetProductByIdAsNoTracking(id);
 
         /// <inheritdoc/>
-        public Task<List<Product>> GetProducts() => _productRepository.GetProducts();
+        public Task<List<Product>> GetProducts() => _productRepository.GetProductsAsNoTracking();
 
         /// <inheritdoc/>
         public async Task<(Product product, IEnumerable<ValidationResult> errors)> TryInsertProduct(Product product)
