@@ -100,6 +100,87 @@ namespace WareHouse.Repositories
         }
         #endregion
 
+        #region GetProductByIdAsNoTracking
+        [Fact]
+        public async Task GetProductByIdAsNoTracking_WhenNoneExist_ShouldReturnNull()
+        {
+            //Arrange
+            using var context = Fixture.CreateContext();
+            var sut = new ProductRepository(context);
+
+            //Act
+            var result = await sut.GetProductByIdAsNoTracking(Guid.NewGuid());
+
+            //Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetProductByIdAsNoTracking_WhenExist_ShouldReturnProduct()
+        {
+            //Arrange
+            using var context = Fixture.CreateContext();
+            var sut = new ProductRepository(context);
+
+            var productId = Guid.NewGuid();
+            var productCode = "ABCDEFGH";
+            var product = new Product { Id = productId, Code = productCode };
+            sut.Add(product);
+            await context.SaveChangesAsync();
+            context.ChangeTracker.Clear();
+
+            //Act
+            var result = await sut.GetProductByIdAsNoTracking(productId);
+
+            //Aseert
+            Assert.NotNull(result);
+            Assert.Equal(productId, result.Id);
+            Assert.DoesNotContain(context.ChangeTracker.Entries<Product>(), e => e.Entity.Id == productId);
+        }
+
+        #endregion
+
+        #region GetProductsAsNoTracking
+        [Fact]
+        public async Task GetProductsAsNoTracking_WhenNoProductsExist_ShouldReturnEmptyList()
+        {
+            //Arrange
+            using var context = Fixture.CreateContext();
+            var sut = new ProductRepository(context);
+
+            //Act
+            var result = await sut.GetProductsAsNoTracking();
+
+            //Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public async Task GetProductsAsNoTracking_WhenExistProducts_ShouldReturnNotEmptyList()
+        {
+            //Arrange
+            using var context = Fixture.CreateContext();
+            var sut = new ProductRepository(context);
+
+            var productId = Guid.NewGuid();
+            var productCode = "QWERTYUI";
+            var product = new Product { Id = productId, Code = productCode };
+            sut.Add(product);
+            await context.SaveChangesAsync();
+            context.ChangeTracker.Clear();
+
+            //Act
+            var result = await sut.GetProductsAsNoTracking();
+
+            //Assert
+            Assert.NotEmpty(result);
+            Assert.Contains(result, p => p.Id == productId);
+            foreach (var p in result)
+                Assert.DoesNotContain(context.ChangeTracker.Entries<Product>(), e => e.Entity.Id == p.Id);
+        }
+        #endregion
+
         #region GetProductByCode
         [Fact]
         public async Task GetProductByCode_WhenNoneExist_ShouldReturnNull()

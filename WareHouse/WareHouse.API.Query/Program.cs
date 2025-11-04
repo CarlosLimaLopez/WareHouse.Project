@@ -1,8 +1,7 @@
-using WareHouse.Context;
 using Microsoft.EntityFrameworkCore;
+using WareHouse.Context;
 using WareHouse.Product;
 using WareHouse.Repositories;
-using WareHouse.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +19,6 @@ builder.Services.AddScoped<ProductValidator>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUnitOfWork<WareHouseContext>, UnitOfWork<WareHouseContext>>();
 #endregion
-
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -43,6 +41,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
 
 // For integration tests, this class is used to start the application.
 public partial class Program { }
