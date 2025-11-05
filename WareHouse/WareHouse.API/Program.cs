@@ -9,8 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 #region Contexts
 builder.Services.AddDbContext<WareHouseContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("Database")) //For quick debug in execution
-    //options.UseSqlServer(builder.Configuration.GetConnectionString("Database")) //For production use and integration tests
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Database"))
 );
 #endregion
 

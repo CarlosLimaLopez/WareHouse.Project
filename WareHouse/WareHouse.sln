@@ -32,12 +32,19 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WareHouse.API.IntegrationTests", "WareHouse.API.IntegrationTests\WareHouse.API.IntegrationTests.csproj", "{8A2314C0-B4A0-4B88-9ACF-025946779F36}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{6BC95D27-F751-401C-8B08-1A50C4F1B5FD}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WareHouse.MessageBus", "WareHouse.MessageBus", "{0EDF6EFB-C6DF-467D-9F66-BDD76AF80CE9}"
 	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
-		start-rabbitmq.bat = start-rabbitmq.bat
-		stop-rabbitmq.bat = stop-rabbitmq.bat
+		warehouse.yml = warehouse.yml
+		run-warehouse.bat = run-warehouse.bat
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageBus", "MessageBus", "{0EDF6EFB-C6DF-467D-9F66-BDD76AF80CE9}"
+	ProjectSection(SolutionItems) = preProject
+		rabbit-mq-dck.yml = rabbit-mq-dck.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{2DAC797B-7E4C-41B3-B1D8-941F3DF012AE}"
+	ProjectSection(SolutionItems) = preProject
+		sql-server-dck.yml = sql-server-dck.yml
 	EndProjectSection
 EndProject
 Global
@@ -107,6 +114,7 @@ Global
 		{F10C8A67-B9CC-4DCC-843B-034ED26DD272} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{8A2314C0-B4A0-4B88-9ACF-025946779F36} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{0EDF6EFB-C6DF-467D-9F66-BDD76AF80CE9} = {6BC95D27-F751-401C-8B08-1A50C4F1B5FD}
+		{2DAC797B-7E4C-41B3-B1D8-941F3DF012AE} = {6BC95D27-F751-401C-8B08-1A50C4F1B5FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {07410E42-99B0-4584-A0D5-4D48432C4CB4}
