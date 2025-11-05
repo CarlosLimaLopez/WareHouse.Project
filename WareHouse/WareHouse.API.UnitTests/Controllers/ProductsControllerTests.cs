@@ -37,7 +37,7 @@ namespace WareHouse.Product
             //Arrange
             var product = SetupProduct();
             var errors = SetupErrors("Duplicate code", nameof(product.Code));
-            _productServiceMock.Setup(s => s.TryInsertProduct(product)).ReturnsAsync((product, errors));
+            _productServiceMock.Setup(s => s.TryInsertProduct(product, true)).ReturnsAsync((product, errors));
 
             //Act
             var result = await _productsController.PostProduct(product);
@@ -53,7 +53,7 @@ namespace WareHouse.Product
         {
             //Arrange
             var product = SetupProduct();
-            _productServiceMock.Setup(s => s.TryInsertProduct(product)).ReturnsAsync((product, []));
+            _productServiceMock.Setup(s => s.TryInsertProduct(product, true)).ReturnsAsync((product, []));
 
             //Act
             var result = await _productsController.PostProduct(product);
@@ -70,7 +70,7 @@ namespace WareHouse.Product
         public async Task DeleteProduct_WhenNotExists_ShouldReturnNotFound()
         {
             //Arrange
-            _productServiceMock.Setup(s => s.TryDeleteProduct(It.IsAny<Guid>())).ReturnsAsync((null, new List<ValidationResult>()));
+            _productServiceMock.Setup(s => s.TryDeleteProduct(It.IsAny<Guid>(), true)).ReturnsAsync((null, new List<ValidationResult>()));
 
             //Act
             var result = await _productsController.DeleteProduct(Guid.NewGuid());
@@ -86,7 +86,7 @@ namespace WareHouse.Product
             var product = SetupProduct();
             var errors = SetupErrors("Cannot delete", nameof(product.Code));
                 
-            _productServiceMock.Setup(s => s.TryDeleteProduct(product.Id)).ReturnsAsync((product, errors));
+            _productServiceMock.Setup(s => s.TryDeleteProduct(product.Id, true)).ReturnsAsync((product, errors));
 
             //Act
             var result = await _productsController.DeleteProduct(product.Id);
@@ -102,7 +102,7 @@ namespace WareHouse.Product
         {
             //Arrange
             var product = SetupProduct();
-            _productServiceMock.Setup(s => s.TryDeleteProduct(product.Id)).ReturnsAsync((product, []));
+            _productServiceMock.Setup(s => s.TryDeleteProduct(product.Id, true)).ReturnsAsync((product, []));
 
             //Act
             var result = await _productsController.DeleteProduct(product.Id);

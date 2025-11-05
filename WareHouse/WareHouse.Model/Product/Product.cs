@@ -23,6 +23,14 @@ namespace WareHouse.Product
         public int Stock { get; private set; } = 0;
 
         /// <summary>
+        /// Update stock to a specific value
+        /// </summary>
+        public void UpdateStock(int stock)
+        {
+            Stock = stock;
+        }
+
+        /// <summary>
         /// Increment stock by 1
         /// </summary>
         public void AddStock()
@@ -59,7 +67,7 @@ namespace WareHouse.Product
         {
             if (Stock <= 0)
             {
-                yield return new ValidationResult("Cannot remove stock when stock level is zero.", new[] { nameof(Stock) });
+                yield return new ValidationResult("Cannot remove stock when stock level is zero.", [nameof(Stock)]);
             }
         }
 
@@ -71,7 +79,19 @@ namespace WareHouse.Product
         {
             if (Stock != 0)
             {
-                yield return new ValidationResult("Cannot remove a product when stock level is zero.", new[] { nameof(Stock) });
+                yield return new ValidationResult("Cannot remove a product when stock level is zero.", [nameof(Stock)]);
+            }
+        }
+
+        /// <summary>
+        /// Validates if stock can be removed
+        /// </summary>
+        /// <returns>List of <see cref="ValidationResult"/></returns>
+        public IEnumerable<ValidationResult> ValidateUpdateStock(int stock)
+        {
+            if (stock < 0)
+            {
+                yield return new ValidationResult("Stock cannot be negative.", [nameof(Stock)]);
             }
         }
     }

@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using WareHouse.Context;
 using WareHouse.Product;
@@ -8,8 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 #region Contexts
 builder.Services.AddDbContext<WareHouseContext>(options =>
-    //options.UseSqlite(builder.Configuration.GetConnectionString("Database")) //For quick debug in execution
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Database")) //For production use and integration tests
+    options.UseSqlite(builder.Configuration.GetConnectionString("Database")) //For quick debug in execution
+    //options.UseSqlServer(builder.Configuration.GetConnectionString("Database")) //For production use and integration tests
 );
 #endregion
 
@@ -18,6 +19,38 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ProductValidator>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUnitOfWork<WareHouseContext>, UnitOfWork<WareHouseContext>>();
+#endregion
+
+#region MassTransit
+var rabbitConfig = builder.Configuration.GetSection("RabbitMq");
+var rabbitHost = rabbitConfig.GetValue<string>("Host");
+var rabbitPort = rabbitConfig.GetValue<int>("Port");
+var rabbitUser = rabbitConfig.GetValue<string>("Username");
+var rabbitPass = rabbitConfig.GetValue<string>("Password");
+var rabbitVHost = rabbitConfig.GetValue<string>("VirtualHost");
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<ProductCreatedEventConsumer>();
+    x.AddConsumer<ProductUpdatedEventConsumer>();
+    x.AddConsumer<ProductDeletedEventConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(rabbitHost, (ushort)rabbitPort, rabbitVHost, h =>
+        {
+            h.Username(rabbitUser!);
+            h.Password(rabbitPass!);
+        });
+
+        cfg.ReceiveEndpoint("product-created-events", e =>
+            e.ConfigureConsumer<ProductCreatedEventConsumer>(context));
+        cfg.ReceiveEndpoint("product-updated-events", e =>
+            e.ConfigureConsumer<ProductUpdatedEventConsumer>(context));
+        cfg.ReceiveEndpoint("product-deleted-events", e =>
+            e.ConfigureConsumer<ProductDeletedEventConsumer>(context));
+    });
+});
 #endregion
 
 builder.Services.AddControllers();
