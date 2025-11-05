@@ -1,10 +1,9 @@
 using System.Net;
 using System.Net.Http.Json;
+using WareHouse.API.Query.IntegrationTests;
 
 namespace WareHouse.Product
 {
-    using API.Query.IntegrationTests;
-
     [Collection("WareHouseApiQueryTests")]
     public class ProductsControllerTests : IAsyncLifetime
     {

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+	<PackageReference Include="MassTransit" Version="8.5.5" />
     <ProjectReference Include="..\WareHouse.Data\WareHouse.Data.csproj" />
   </ItemGroup>
 

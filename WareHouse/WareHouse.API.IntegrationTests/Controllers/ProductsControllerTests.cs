@@ -4,7 +4,6 @@ using System.Net.Http.Json;
 
 namespace WareHouse.Product
 {
-    using System.ComponentModel.DataAnnotations;
     using API.IntegrationTests;
 
     [Collection("WareHouseApiTests")]
@@ -14,6 +13,10 @@ namespace WareHouse.Product
 
         public Task InitializeAsync()
         {
+            ProductCreatedEventTestConsumer.Reset();
+            ProductUpdatedEventTestConsumer.Reset();
+            ProductDeletedEventTestConsumer.Reset();
+
             return Task.CompletedTask;
         }
 
@@ -53,6 +56,19 @@ namespace WareHouse.Product
             Assert.NotNull(createdProduct);
             Assert.Equal(product.Id, createdProduct.Id);
             Assert.Equal(product.Code, createdProduct.Code);
+
+            var receivedTask = await Task.WhenAny(
+                ProductCreatedEventTestConsumer.ReceivedEvent.Task,
+                Task.Delay(5000)
+            );
+
+            Assert.NotNull(receivedTask);
+            Assert.True(receivedTask.IsCompleted);
+
+            var receivedEvent = await ProductCreatedEventTestConsumer.ReceivedEvent.Task;
+            Assert.NotNull(receivedEvent);
+            Assert.Equal(product.Id, receivedEvent.Id);
+            Assert.Equal(product.Code, receivedEvent.Code);
         }
 
         [Fact]
@@ -101,6 +117,18 @@ namespace WareHouse.Product
 
             // Assert
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+
+            var receivedTask = await Task.WhenAny(
+                ProductDeletedEventTestConsumer.ReceivedEvent.Task,
+                Task.Delay(5000)
+            );
+
+            Assert.NotNull(receivedTask);
+            Assert.True(receivedTask.IsCompleted);
+
+            var receivedEvent = await ProductDeletedEventTestConsumer.ReceivedEvent.Task;
+            Assert.NotNull(receivedEvent);
+            Assert.Equal(product.Id, receivedEvent.Id);
         }
 
         [Fact]
@@ -136,6 +164,19 @@ namespace WareHouse.Product
             Assert.NotNull(updatedProduct);
             Assert.Equal(product.Id, updatedProduct.Id);
             Assert.Equal(product.Stock + 1, updatedProduct.Stock);
+
+            var receivedTask = await Task.WhenAny(
+                ProductUpdatedEventTestConsumer.ReceivedEvent.Task,
+                Task.Delay(5000)
+            );
+
+            Assert.NotNull(receivedTask);
+            Assert.True(receivedTask.IsCompleted);
+
+            var receivedEvent = await ProductUpdatedEventTestConsumer.ReceivedEvent.Task;
+            Assert.NotNull(receivedEvent);
+            Assert.Equal(product.Id, receivedEvent.Id);
+            Assert.Equal(product.Stock + 1, receivedEvent.Stock);
         }
 
         [Fact]
@@ -167,6 +208,19 @@ namespace WareHouse.Product
 
             // Assert
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+
+            var receivedTask = await Task.WhenAny(
+                ProductUpdatedEventTestConsumer.ReceivedEvent.Task,
+                Task.Delay(5000)
+            );
+
+            Assert.NotNull(receivedTask);
+            Assert.True(receivedTask.IsCompleted);
+
+            var receivedEvent = await ProductUpdatedEventTestConsumer.ReceivedEvent.Task;
+            Assert.NotNull(receivedEvent);
+            Assert.Equal(product.Id, receivedEvent.Id);
+            Assert.Equal(product.Stock - 1, receivedEvent.Stock);
         }
 
         [Fact]
