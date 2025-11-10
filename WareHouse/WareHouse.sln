@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WareHouse.API.IntegrationTe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{6BC95D27-F751-401C-8B08-1A50C4F1B5FD}"
 	ProjectSection(SolutionItems) = preProject
-		warehouse.yml = warehouse.yml
+		docker-compose.yml = docker-compose.yml
 		run-warehouse.bat = run-warehouse.bat
 	EndProjectSection
 EndProject
@@ -45,6 +45,36 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{2DAC797B-7E4C-41B3-B1D8-941F3DF012AE}"
 	ProjectSection(SolutionItems) = preProject
 		sql-server-dck.yml = sql-server-dck.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kubernetes", "kubernetes", "{C7616743-82A1-42CE-B131-4B16A3152C8A}"
+	ProjectSection(SolutionItems) = preProject
+		prometheus.yml = prometheus.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WareHouse.API.Query", "WareHouse.API.Query", "{7A766607-3A43-4463-8509-9DDE914D31E0}"
+	ProjectSection(SolutionItems) = preProject
+		warehouse-api-query-deployment.yml = warehouse-api-query-deployment.yml
+		warehouse-api-query-hpa.yml = warehouse-api-query-hpa.yml
+		warehouse-api-query-service.yml = warehouse-api-query-service.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlServer", "SqlServer", "{AD3B3873-6D7F-4648-BCB8-BBC7E466B197}"
+	ProjectSection(SolutionItems) = preProject
+		sqlserver-deployment.yml = sqlserver-deployment.yml
+		sqlserver-service.yml = sqlserver-service.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RabbitMq", "RabbitMq", "{7F8F3DF5-9747-4256-9850-7553F5112DAE}"
+	ProjectSection(SolutionItems) = preProject
+		rabbitmq-deployment.yml = rabbitmq-deployment.yml
+		rabbitmq-service.yml = rabbitmq-service.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Warehouse.API", "Warehouse.API", "{745A0F04-75F4-4388-8512-6AF8FCE992F4}"
+	ProjectSection(SolutionItems) = preProject
+		warehouse-api-deployment.yml = warehouse-api-deployment.yml
+		warehouse-api-service.yml = warehouse-api-service.yml
 	EndProjectSection
 EndProject
 Global
@@ -115,6 +145,11 @@ Global
 		{8A2314C0-B4A0-4B88-9ACF-025946779F36} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{0EDF6EFB-C6DF-467D-9F66-BDD76AF80CE9} = {6BC95D27-F751-401C-8B08-1A50C4F1B5FD}
 		{2DAC797B-7E4C-41B3-B1D8-941F3DF012AE} = {6BC95D27-F751-401C-8B08-1A50C4F1B5FD}
+		{C7616743-82A1-42CE-B131-4B16A3152C8A} = {6BC95D27-F751-401C-8B08-1A50C4F1B5FD}
+		{7A766607-3A43-4463-8509-9DDE914D31E0} = {C7616743-82A1-42CE-B131-4B16A3152C8A}
+		{AD3B3873-6D7F-4648-BCB8-BBC7E466B197} = {C7616743-82A1-42CE-B131-4B16A3152C8A}
+		{7F8F3DF5-9747-4256-9850-7553F5112DAE} = {C7616743-82A1-42CE-B131-4B16A3152C8A}
+		{745A0F04-75F4-4388-8512-6AF8FCE992F4} = {C7616743-82A1-42CE-B131-4B16A3152C8A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {07410E42-99B0-4584-A0D5-4D48432C4CB4}

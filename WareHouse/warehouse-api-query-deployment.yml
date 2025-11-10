@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: warehouse-api-query
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: warehouse-api-query
+  template:
+    metadata:
+      labels:
+        app: warehouse-api-query
+    spec:
+      containers:
+      - name: warehouse-api-query
+        image: warehouse-api-query:latest
+        imagePullPolicy: Never
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Development"
+        - name: ConnectionStrings__Database
+          value: "Server=sqlserver,1433;Database=WareHouseQueryDatabase;User Id=sa;Password=Your!Passw0rd;TrustServerCertificate=True;"
+        - name: RabbitMq__Host
+          value: "rabbitmq"
+        - name: RabbitMq__Port
+          value: "5672"
+        - name: RabbitMq__Username
+          value: "user"
+        - name: RabbitMq__Password
+          value: "password"
+        - name: RabbitMq__VirtualHost
+          value: "/"
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
