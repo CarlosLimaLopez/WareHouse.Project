@@ -12,6 +12,8 @@ This repository contains the **Warehouse API** project, designed with modern sof
 - **Hexagonal Architecture (Ports & Adapters)**: The solution is structured to isolate the domain from external dependencies, making testing and technology changes easier.
 - **MassTransit**: Distributed application framework for building message-based systems.
 - **RabbitMQ**: Message broker used for asynchronous communication and event-driven architecture.
+- **Entity Framework Core**: ORM for .NET, used for data access and persistence.
+- **SQL Server**: Relational database engine for storing and querying structured data.
 - **Docker**: The entire solution is containerized for portability and easy deployment.
 - **Kubernetes**: Application deployment and management are handled in a Kubernetes cluster, enabling advanced orchestration and high availability.
 - **Autoscaling**: Uses Kubernetes Horizontal Pod Autoscaler (HPA) to automatically adjust the number of replicas based on load.
@@ -37,7 +39,7 @@ This repository contains the **Warehouse API** project, designed with modern sof
 - **WareHouse.Data.UnitTests/**: Unit tests for the data layer, focusing on repository and data access logic.
 - **WareHouse.Services.UnitTests/**: Unit tests for application and domain services.
 
-- #### Infrastructure & Configuration
+#### Infrastructure & Configuration
 - **Infrastructure/Docker/docker-compose.yml**: Orchestrates multi-container local development, including SQL Server, RabbitMQ, the main API (`warehouse-api`), and the query API (`warehouse-api-query`).
 - **Infrastructure/Kubernetes/**: Contains Kubernetes manifests for deploying the APIs, including deployment configurations and autoscaling settings.
 
