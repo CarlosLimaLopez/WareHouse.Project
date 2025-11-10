@@ -1,5 +1,6 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using Prometheus;
 using WareHouse.Context;
 using WareHouse.Product;
 using WareHouse.Repositories;
@@ -60,11 +61,15 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.Urls.Add("http://0.0.0.0:80");
+
+app.UseMetricServer();
+
+app.UseHttpMetrics();
+
+app.UseSwagger();
+
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

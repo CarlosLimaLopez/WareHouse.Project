@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: warehouse-api-query
+spec:
+  selector:
+    app: warehouse-api-query
+  ports:
+    - protocol: TCP
+      port: 7066         
+      targetPort: 80     # deployment port
+      nodePort: 30066    # extern port
+  type: NodePort

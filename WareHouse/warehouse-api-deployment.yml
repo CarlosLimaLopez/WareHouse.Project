@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: warehouse-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: warehouse-api
+  template:
+    metadata:
+      labels:
+        app: warehouse-api
+    spec:
+      containers:
+      - name: warehouse-api
+        image: warehouse-api:latest
+        imagePullPolicy: Never
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Development"
+        - name: ConnectionStrings__Database
+          value: "Server=sqlserver,1433;Database=WareHouseCommandDatabase;User Id=sa;Password=Your!Passw0rd;TrustServerCertificate=True;"
+        - name: RabbitMq__Host
+          value: "rabbitmq"
+        - name: RabbitMq__Port
+          value: "5672"
+        - name: RabbitMq__Username
+          value: "user"
+        - name: RabbitMq__Password
+          value: "password"
+        - name: RabbitMq__VirtualHost
+          value: "/"
+        ports:
+        - containerPort: 80
